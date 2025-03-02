@@ -11,23 +11,13 @@ import Page from "../models/Page.js";
 
 export const home = async (req, res) => {
   const menuItems = await NavigationItem.query();
-  const userData = await User.query().fieldById(1);
-  const pages = await Page.query();
-  // return res.send(menuItems);
-
-  const pageData = {
-    title: "Home",
-    content: `
-      <p>Welcome to our website. We are a small company that does great things!</p>
-      <p>Feel free to browse our site and learn more about us.</p>
-    `,
-  };
+  const userData = await User.query(); //.fieldById(1);
+  const pageData = await Page.query().pageOne();
 
   res.render("pages/home", {
     ...pageData,
     userData,
     menuItems,
-    pages,
   });
 };
 
@@ -46,7 +36,6 @@ export const about = async (req, res) => {
   res.render("pages/default", {
     ...pageData,
     menuItems,
-    pages,
   });
 };
 
@@ -68,6 +57,5 @@ export const contact = async (req, res) => {
   res.render("pages/default", {
     ...pageData,
     menuItems,
-    pages,
   });
 };

@@ -5,7 +5,7 @@ import { Model } from "objection";
 Model.knex(knexConfig);
 
 // define the Pages model
-class Page extends Model {
+export default class Page extends Model {
   static get tableName() {
     return "pages";
   }
@@ -17,16 +17,14 @@ class Page extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["title", "is_homepage"],
+      required: ["title", "slug"],
       properties: {
         id: { type: "integer" },
         title: { type: "string", minLength: 1, maxLength: 255 },
         slug: { type: "string", minLength: 1, maxLength: 255 },
-        content: { type: "string", maxLength: 255 },
-        is_homepage: { type: "Boolean" },
+        content: { type: "string" },
+        is_homepage: { type: "boolean" },
       },
     };
   }
 }
-
-export default Page;
