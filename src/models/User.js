@@ -1,9 +1,8 @@
 import knexConfig from "../lib/Knex.js";
 import { Model } from "objection";
-<<<<<<< HEAD
 import UserMeta from "./UserMeta.js";
-=======
->>>>>>> 4ba4e28f173cfa8b554d3b43e2b6d6c6811f1c32
+import Pet from "./Pet.js";
+import Interest from "./Interest.js";
 
 // instantiate the model
 Model.knex(knexConfig);
@@ -30,7 +29,6 @@ class User extends Model {
       },
     };
   }
-<<<<<<< HEAD
 
   static get relationMappings() {
     return {
@@ -40,16 +38,26 @@ class User extends Model {
         join: {
           from: "users.id",
           to: "user_meta.user_id",
-=======
-  static get relationMappings() {
-    return {
-      user: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: UserMeta,
+        },
+      },
+      pets: {
+        relation: Model.HasManyRelation,
+        modelClass: Pet,
         join: {
-          from: "user_meta.user_id",
-          to: "users.id",
->>>>>>> 4ba4e28f173cfa8b554d3b43e2b6d6c6811f1c32
+          from: "users.id",
+          to: "pets.owner_id"
+        }
+      },
+      interests: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Interest,
+        join: {
+          from: "users.id",
+          through: {
+            from: "interest_user.user_id",
+            to: "interest_user.interest_id",
+          },
+          to: "interests.id",
         },
       },
     };
