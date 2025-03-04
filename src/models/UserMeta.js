@@ -1,13 +1,16 @@
-import knexConfig from "../lib/Knex.js";
+import knex from "../lib/Knex.js";
 import { Model } from "objection";
 
 // instantiate the model
-Model.knex(knexConfig);
+Model.knex(knex);
 
-// define the NavigationItem model
-class User extends Model {
+// related models
+import User from "./User.js";
+
+// define the UserMeta model
+class UserMeta extends Model {
   static get tableName() {
-    return "users";
+    return "user_meta";
   }
 
   static get idColumn() {
@@ -17,20 +20,21 @@ class User extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["firstname", "lastname", "bio"],
+      required: ["user_id"],
       properties: {
         id: { type: "integer" },
-        firstname: { type: "string", minLength: 1, maxLength: 255 },
-        lastname: { type: "string", maxLength: 255 },
-        bio: { type: "string", minLength: 1 },
+        user_id: { type: "integer" },
+        quote: { type: "string", maxLength: 255 },
+        location: { type: "string", maxLength: 255 },
       },
     };
   }
+
   static get relationMappings() {
     return {
       user: {
         relation: Model.BelongsToOneRelation,
-        modelClass: UserMeta,
+        modelClass: User,
         join: {
           from: "user_meta.user_id",
           to: "users.id",
@@ -40,4 +44,4 @@ class User extends Model {
   }
 }
 
-export default User;
+export default UserMeta;
