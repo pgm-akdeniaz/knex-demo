@@ -1,5 +1,6 @@
 import knexConfig from "../lib/Knex.js";
 import { Model } from "objection";
+import UserMeta from "./UserMeta.js";
 
 // instantiate the model
 Model.knex(knexConfig);
@@ -26,14 +27,15 @@ class User extends Model {
       },
     };
   }
+
   static get relationMappings() {
     return {
-      user: {
-        relation: Model.BelongsToOneRelation,
+      meta: {
+        relation: Model.HasOneRelation,
         modelClass: UserMeta,
         join: {
-          from: "user_meta.user_id",
-          to: "users.id",
+          from: "users.id",
+          to: "user_meta.user_id",
         },
       },
     };
