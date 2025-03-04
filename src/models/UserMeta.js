@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 	
 import knex from "../lib/Knex.js";
 import { Model } from "objection";
@@ -31,6 +32,40 @@ class UserMeta extends Model {
         };
       }
  
+=======
+import knex from "../lib/Knex.js";
+import { Model } from "objection";
+
+// instantiate the model
+Model.knex(knex);
+
+// related models
+import User from "./User.js";
+
+// define the UserMeta model
+class UserMeta extends Model {
+  static get tableName() {
+    return "user_meta";
+  }
+
+  static get idColumn() {
+    return "id";
+  }
+
+  static get jsonSchema() {
+    return {
+      type: "object",
+      required: ["user_id"],
+      properties: {
+        id: { type: "integer" },
+        user_id: { type: "integer" },
+        quote: { type: "string", maxLength: 255 },
+        location: { type: "string", maxLength: 255 },
+      },
+    };
+  }
+
+>>>>>>> 4ba4e28f173cfa8b554d3b43e2b6d6c6811f1c32
   static get relationMappings() {
     return {
       user: {
@@ -44,5 +79,10 @@ class UserMeta extends Model {
     };
   }
 }
+<<<<<<< HEAD
  
 export default UserMeta;
+=======
+
+export default UserMeta;
+>>>>>>> 4ba4e28f173cfa8b554d3b43e2b6d6c6811f1c32
